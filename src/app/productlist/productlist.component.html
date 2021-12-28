@@ -1,0 +1,44 @@
+<div class="container jumbotron">
+    <div class="lead d-flex">
+        <div class="display-4">Product Catalouge</div>
+        <a class="btn btn-danger btn-lg" role="button" [routerLink]="['/addproduct']">Add Product</a>
+    </div>
+    <div *ngIf="products.length!=0" class="mx-5 text-danger h6">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xl-12">
+                <table class="table table-responsive">
+                    <thead class="bg-dark text-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Batch No.</th>
+                            <th>Mfg. Date</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Price</th>
+                            <th>Delete</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of products;let i=index"
+                            [ngClass]="{'alert-danger': product.category==='food', 'alert-success':product.category==='drink', 'alert-primary':product.category==='stationary', 'alert-warning':product.category==='clothing'}">
+                            <td>{{product.productname}}</td>
+                            <td>{{product.category | uppercase}}</td>
+                            <td>{{product.batchno}}</td>
+                            <td>{{product.mfgdate | date}}</td>
+                            <td class="text-center">{{product.quantity}}</td>
+                            <td>{{product.unitprice | currency:'INR'}}</td>
+                            <td><b>{{product.unitprice * product.quantity | currency:'INR'}}</b></td>
+                            <td><button class="btn btn-danger" (click)="delete(i)">Delete</button></td>
+                            <td><button class="btn btn-primary" (click)="edit(i)">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="products.length==0">
+        <div class="text-danger"> Catalogue is currently empty!</div>
+    </div>
+</div>
